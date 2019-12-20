@@ -40,7 +40,7 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
 
     @Override
     public int getItemCount() {
-        return 0;
+        return image_list.size();
     }
 
 
