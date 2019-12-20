@@ -26,26 +26,17 @@ public class LoginActivity extends AppCompatActivity {
         bt_signup = findViewById(R.id.bt_signup);
         tv_forgot_pass = findViewById(R.id.tv_forgotpass);
 
-        bt_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        bt_login.setOnClickListener(view -> {
 
-            }
         });
 
-        bt_signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(),SignUpActivity.class);
-                startActivity(intent);
-            }
+        bt_signup.setOnClickListener(view -> {
+            Intent intent = new Intent(view.getContext(),SignUpActivity.class);
+            startActivity(intent);
         });
 
-        tv_forgot_pass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        tv_forgot_pass.setOnClickListener(view -> {
 
-            }
         });
 
 
