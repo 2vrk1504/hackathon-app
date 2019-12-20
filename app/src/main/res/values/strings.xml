@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Hackathon App</string>
     <string name="mapbox_access_token">pk.eyJ1IjoiMnZyazE1MDQiLCJhIjoiY2s0ZG96eG1vMDR3bTNrbzNpMXhueGZ5ZCJ9.7Y_vuGp3wa-y6zgV0r2sNg</string>
+    <string name="user_name">User Name</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="retype_password">Retype Password</string>
 </resources>
