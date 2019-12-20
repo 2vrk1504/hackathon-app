@@ -27,8 +27,8 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View item= layoutInflater.inflate(R.layout.street_card, parent, false);
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        View item = layoutInflater.inflate(R.layout.street_card, parent, false);
         ViewHolder viewHolder = new ViewHolder(item);
         return viewHolder;
     }
@@ -48,7 +48,7 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
         public ImageView imageView;
         public ViewHolder(View itemView) {
             super(itemView);
-            this.imageView = (ImageView) itemView.findViewById(R.id.image_view);
+            this.imageView = itemView.findViewById(R.id.image_view);
         }
     }
 

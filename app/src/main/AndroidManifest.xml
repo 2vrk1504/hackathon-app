@@ -14,16 +14,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".SwipeActivity">
+        <activity
+            android:name=".MainActivity"
+            android:label="Hackathon App"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter></activity>
+            </intent-filter>
+        </activity>
         <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity">
         </activity>
-        <activity android:name=".MainActivity"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBg-aX8iEqgfqHQmEcqoJ6fWpCfuy5edok" />
     </application>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.ACCESS_INTERNET" />
 
 </manifest>
