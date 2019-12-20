@@ -15,7 +15,7 @@ public class LoginActivity extends AppCompatActivity {
 
     TextInputLayout til_username,til_password;
     TextView tv_forgot_pass;
-    MaterialButton bt_login,bt_signup;
+    Button bt_login,bt_signup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
