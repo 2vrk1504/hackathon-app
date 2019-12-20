@@ -26,7 +26,7 @@ public class MainActivityTabsPagerAdapter extends FragmentPagerAdapter {
     private Fragment[] fragments;
 
     public MainActivityTabsPagerAdapter(Context context, FragmentManager fm) {
-        super(fm);
+        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         mContext = context;
         fragments = new Fragment[TAB_ICONS.length];
         fragments[PROFILE_FRAGMENT_POS] = ProfileFragment.newInstance();
