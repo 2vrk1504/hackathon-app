@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Hackathon App</string>
+    <string name="mapbox_access_token">pk.eyJ1IjoiMnZyazE1MDQiLCJhIjoiY2s0ZG96eG1vMDR3bTNrbzNpMXhueGZ5ZCJ9.7Y_vuGp3wa-y6zgV0r2sNg</string>
 </resources>
