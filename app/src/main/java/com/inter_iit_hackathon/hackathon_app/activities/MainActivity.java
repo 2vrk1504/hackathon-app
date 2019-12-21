@@ -1,8 +1,9 @@
-package com.inter_iit_hackathon.hackathon_app;
+package com.inter_iit_hackathon.hackathon_app.activities;
 
 import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
+import com.inter_iit_hackathon.hackathon_app.R;
 import com.inter_iit_hackathon.hackathon_app.adapters.MainActivityTabsPagerAdapter;
 
 import androidx.viewpager.widget.ViewPager;
