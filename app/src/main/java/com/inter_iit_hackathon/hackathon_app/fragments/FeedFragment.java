@@ -62,12 +62,11 @@ public class FeedFragment extends Fragment {
         FeedAdapter adapter = new FeedAdapter(f);
         rview.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        
         MyClient.getClient().query(GetPostsQuery.builder().build()).enqueue(new ApolloCall.Callback<GetPostsQuery.Data>() {
             @Override
             public void onResponse(@NotNull Response<GetPostsQuery.Data> response) {
-
                 if(response.data()!=null){
-
                     getActivity().runOnUiThread(()-> Toast.makeText(getContext(),response.data().toString()
                             ,Toast.LENGTH_SHORT).show());
 
