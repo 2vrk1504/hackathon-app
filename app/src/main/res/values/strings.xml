@@ -24,4 +24,7 @@
     <string name="mark_zucc">Mark@Zucc</string>
     <string name="email_id">Email ID</string>
     <string name="reputation">Reputation</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
