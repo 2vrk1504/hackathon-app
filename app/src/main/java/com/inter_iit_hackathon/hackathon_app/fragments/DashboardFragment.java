@@ -29,6 +29,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.inter_iit_hackathon.hackathon_app.GetProjectsQuery;
 import com.inter_iit_hackathon.hackathon_app.R;
 import com.inter_iit_hackathon.hackathon_app.activities.MainActivity;
+import com.inter_iit_hackathon.hackathon_app.activities.NewPostActivity;
 import com.inter_iit_hackathon.hackathon_app.adapters.CardStackAdapter;
 import com.inter_iit_hackathon.hackathon_app.classes.DashboardData;
 import com.inter_iit_hackathon.hackathon_app.graphql_client.MyClient;
@@ -48,6 +49,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -63,6 +66,7 @@ public class DashboardFragment extends Fragment {
     private CardStackLayoutManager cardStackLayoutManager;
     private ProgressBar bar;
     private Boolean state = Boolean.TRUE;
+    private FloatingActionButton fab_add_pic;
 
     public static DashboardFragment newInstance() {
        return new DashboardFragment();
@@ -91,7 +95,7 @@ public class DashboardFragment extends Fragment {
         bar.setVisibility(View.VISIBLE);
         if(state){
             state=false;
-            MyClient.getClient().query(GetProjectsQuery.builder().build()).enqueue(new ApolloCall.Callback<GetProjectsQuery.Data>() {
+            MyClient.getClient(null).query(GetProjectsQuery.builder().build()).enqueue(new ApolloCall.Callback<GetProjectsQuery.Data>() {
                 @Override
                 public void onResponse(@NotNull Response<GetProjectsQuery.Data> response) {
                     if(response.data()!=null) {
@@ -176,8 +180,11 @@ public class DashboardFragment extends Fragment {
     private File createImageFile() throws IOException {
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
             String imageFileName = "tempPic";
-            File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-            File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+        File storageDir = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.FROYO) {
+            storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        }
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
             return image;
     }
 
