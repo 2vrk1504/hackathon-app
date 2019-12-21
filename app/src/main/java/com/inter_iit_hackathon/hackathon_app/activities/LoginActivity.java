@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.se.omapi.Session;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,15 +39,17 @@ public class LoginActivity extends AppCompatActivity {
         bt_login = findViewById(R.id.bt_login);
         bt_signup = findViewById(R.id.bt_signup);
         tv_forgot_pass = findViewById(R.id.tv_forgotpass);
-
         sess = new SessionManager(getApplicationContext());
+        if(sess.isLoggedIn()){
+            startActivity(new Intent(this,MainActivity.class));
+        }
 
         bt_login.setOnClickListener(view ->{
             String email = til_username.getEditText().getText().toString();
             String password = til_password.getEditText().getText().toString();
 
             // request
-            MyClient.getClient().mutate(
+            MyClient.getClient(null).mutate(
                     SignInMutation.builder()
                     .email(email)
                     .password(password)
@@ -55,22 +58,31 @@ public class LoginActivity extends AppCompatActivity {
                     new ApolloCall.Callback<SignInMutation.Data>() {
                         @Override
                         public void onResponse(@NotNull Response<SignInMutation.Data> response) {
-                            sess.setLoggedInProfile(response.data().signIn());
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                            finish();
+                            if(response.data() == null){
+                                LoginActivity.this.runOnUiThread(() -> Toast.makeText(LoginActivity.this,"Account Not Found! Please check credentials",Toast.LENGTH_LONG).show());
+                            }
+                            else {
+                                sess.setLoggedInProfile(response.data().signIn());
+                                Log.d("Vallabh", response.data().signIn().token());
+                                LoginActivity.this.runOnUiThread(()->{
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    finish();
+                                });
+                            }
                         }
 
                         @Override
                         public void onFailure(@NotNull ApolloException e) {
-                            Toast.makeText(getApplicationContext(), "Some error occurred", Toast.LENGTH_LONG).show();
+                            LoginActivity.this.runOnUiThread(() -> Toast.makeText(LoginActivity.this,e.toString(),Toast.LENGTH_LONG).show());
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
                         }
                     }
             );
         });
 
         bt_signup.setOnClickListener(view -> {
-            Intent intent = new Intent(view.getContext(), SignUpActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(view.getContext(), SignUpActivity.class));
             finish();
         });
         tv_forgot_pass.setOnClickListener(view -> {

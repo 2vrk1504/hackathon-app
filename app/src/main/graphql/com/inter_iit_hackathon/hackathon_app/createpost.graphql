@@ -1,0 +1,13 @@
+mutation CreatePost($photo: String!, $content: String!, $title: String!, $lat: Float!, $lng: Float!){
+    createPost(data: {
+            photo: $photo,
+            content: $content,
+            title: $title,
+            location: {
+                lat: $lat,
+                lng: $lng
+            }
+    }){
+        id
+    }
+}

@@ -1,0 +1,9 @@
+subscription Me{
+    me{
+        id
+        email
+        name
+        maximumDistance
+        shareMyFeed
+    }
+}

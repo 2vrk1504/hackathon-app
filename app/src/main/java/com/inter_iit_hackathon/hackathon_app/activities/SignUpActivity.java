@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class SignUpActivity extends AppCompatActivity {
-    TextInputLayout til_username, til_password, til_repassword;
+    TextInputLayout til_username, til_password, til_repassword, til_email;
     MaterialButton bt_signup;
     SessionManager sess;
 
@@ -36,6 +36,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         til_username = findViewById(R.id.tf_username);
         til_password = findViewById(R.id.tf_password);
+        til_email = findViewById(R.id.tf_email);
         til_repassword = findViewById(R.id.tf_re_password);
         bt_signup = findViewById(R.id.bt_signup);
 
@@ -45,20 +46,23 @@ public class SignUpActivity extends AppCompatActivity {
             String user = Objects.requireNonNull(til_username.getEditText()).getText().toString();
             String pass = Objects.requireNonNull(til_password.getEditText()).getText().toString();
             String repass = Objects.requireNonNull(til_repassword.getEditText()).getText().toString();
+            String email = Objects.requireNonNull(til_email.getEditText().getText().toString());
             if (user.equals("") || pass.equals("")) {
                 Snackbar.make(view.getRootView(), "Please enter details before continuing!", Snackbar.LENGTH_SHORT).show();
             } else {
                 if (pass.equals(repass)) {
                     // request
-                    MyClient.getClient().mutate(
+                    MyClient.getClient(null).mutate(
                             SignUpMutation.builder()
-                                    .email(user)
+                                    .email(email)
+                                    .name(user)
                                     .password(pass)
                                     .build()
                     ).enqueue(
                             new ApolloCall.Callback<SignUpMutation.Data>() {
                                 @Override
                                 public void onResponse(@NotNull Response<SignUpMutation.Data> response) {
+
                                     sess.setLoggedInProfile(response.data().signUp());
                                     startActivity(new Intent(SignUpActivity.this, MainActivity.class));
                                     finish();

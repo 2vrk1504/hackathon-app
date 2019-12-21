@@ -14,6 +14,7 @@
         android:layout_above="@id/linearview2"
         android:scaleType="centerCrop"
         android:layout_marginBottom="-30dp"
+        android:contentDescription="@string/profile_image"
         android:src="@drawable/wave" />
 
     <LinearLayout
@@ -29,7 +30,7 @@
             android:layout_height="200dp"
             android:layout_gravity="center"
             android:layout_margin="40dp"
-            android:src="@drawable/profile" />
+            android:src="@drawable/unknown" />
 
     </LinearLayout>
 
@@ -55,10 +56,11 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_gravity="center"
             android:layout_margin="20dp"
+            android:contentDescription="@string/crown"
             android:src="@drawable/ic_crown" />
 
         <TextView
@@ -68,7 +70,7 @@
 
             android:layout_margin="20dp"
             android:gravity="center"
-            android:text="Level : 20"
+            android:text="@string/reputation"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="#FFFFFF"
             android:textSize="30sp"

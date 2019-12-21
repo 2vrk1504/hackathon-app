@@ -2,6 +2,7 @@ package com.inter_iit_hackathon.hackathon_app.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.material.tabs.TabLayout;
 import com.inter_iit_hackathon.hackathon_app.R;
@@ -24,7 +25,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SessionManager sess = new SessionManager(this);
+        sess = new SessionManager(this);
+        Log.d("Vallabh", "yoyoyo");
+
         if(!sess.isLoggedIn()){
             startActivity(new Intent(this, LoginActivity.class));
             finish();

@@ -1,0 +1,5 @@
+mutation AddTrivial($id: String!){
+    addTrivial(id: $id){
+        id
+    }
+}

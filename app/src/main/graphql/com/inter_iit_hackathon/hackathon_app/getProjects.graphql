@@ -1,0 +1,17 @@
+query GetProjects{
+    projects{
+        id
+        title
+        author{
+            id
+            name
+        }
+        description
+        photo
+        updatedAt
+        location{
+            lat
+            lng
+        }
+    }
+}

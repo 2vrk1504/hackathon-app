@@ -1,18 +1,21 @@
 package com.inter_iit_hackathon.hackathon_app.classes;
 
 public class DashboardData {
-    String image;
-    String road_name;
-    String description;
-
+    private String image;
+    private String road_name;
+    private String description;
+    private String postedOn;
+    private String putUserName;
     public String getImage() {
         return image;
     }
 
-    public DashboardData(String image, String road_name, String description) {
+    public DashboardData(String image, String road_name, String description, String postedOn, String putUserName) {
         this.image = image;
         this.road_name = road_name;
         this.description = description;
+        this.postedOn = postedOn;
+        this.putUserName = putUserName;
     }
 
     public void setImage(String image) {
@@ -33,5 +36,21 @@ public class DashboardData {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getPostedOn() {
+        return postedOn;
+    }
+
+    public void setPostedOn(String postedOn) {
+        this.postedOn = postedOn;
+    }
+
+    public String getPutUserName() {
+        return putUserName;
+    }
+
+    public void setPutUserName(String putUserName) {
+        this.putUserName = putUserName;
     }
 }
