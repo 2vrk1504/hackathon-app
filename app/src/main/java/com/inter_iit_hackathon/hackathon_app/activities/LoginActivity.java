@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.se.omapi.Session;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(@NotNull ApolloException e) {
-                            Toast.makeText(getApplicationContext(), "Some error occurred", Toast.LENGTH_LONG).show();
+                            LoginActivity.this.runOnUiThread(() -> Toast.makeText(LoginActivity.this,e.toString(),Toast.LENGTH_LONG).show());
                         }
                     }
             );
