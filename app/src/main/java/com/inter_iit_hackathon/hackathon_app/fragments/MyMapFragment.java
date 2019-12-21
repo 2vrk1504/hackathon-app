@@ -17,6 +17,8 @@ import com.inter_iit_hackathon.hackathon_app.R;
 
 public class MyMapFragment extends Fragment implements OnMapReadyCallback {
 
+    private GoogleMap mMap;
+
     public MyMapFragment() {}
 
     public static MyMapFragment newInstance() {
@@ -32,14 +34,14 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_my_map, container, false);
-        SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         return root;
     }
 
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
+        mMap = googleMap;
     }
+
 }

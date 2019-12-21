@@ -51,7 +51,7 @@ public class SessionManager {
     }
 
     public boolean isLoggedIn(){
-        return getToken() == null;
+        return getToken() != null;
     }
 
     public void setLoggedInProfile(SignInMutation.SignIn signIn){

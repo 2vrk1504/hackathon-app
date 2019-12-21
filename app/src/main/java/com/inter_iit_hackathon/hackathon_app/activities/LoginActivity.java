@@ -61,8 +61,11 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             else {
                                 sess.setLoggedInProfile(response.data().signIn());
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
+                                Log.d("Vallabh", response.data().signIn().token());
+                                LoginActivity.this.runOnUiThread(()->{
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    finish();
+                                });
                             }
                         }
 
@@ -77,8 +80,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         bt_signup.setOnClickListener(view -> {
-            Intent intent = new Intent(view.getContext(), SignUpActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(view.getContext(), SignUpActivity.class));
             finish();
         });
         tv_forgot_pass.setOnClickListener(view -> {
