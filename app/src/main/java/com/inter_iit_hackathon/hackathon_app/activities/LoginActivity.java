@@ -39,8 +39,10 @@ public class LoginActivity extends AppCompatActivity {
         bt_login = findViewById(R.id.bt_login);
         bt_signup = findViewById(R.id.bt_signup);
         tv_forgot_pass = findViewById(R.id.tv_forgotpass);
-
         sess = new SessionManager(getApplicationContext());
+        if(sess.isLoggedIn()){
+            startActivity(new Intent(this,MainActivity.class));
+        }
 
         bt_login.setOnClickListener(view ->{
             String email = til_username.getEditText().getText().toString();
