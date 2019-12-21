@@ -56,14 +56,21 @@ public class LoginActivity extends AppCompatActivity {
                     new ApolloCall.Callback<SignInMutation.Data>() {
                         @Override
                         public void onResponse(@NotNull Response<SignInMutation.Data> response) {
-                            sess.setLoggedInProfile(response.data().signIn());
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                            finish();
+                            if(response.data() == null){
+                                LoginActivity.this.runOnUiThread(() -> Toast.makeText(LoginActivity.this,"Account Not Found! Please check credentials",Toast.LENGTH_LONG).show());
+                            }
+                            else {
+                                sess.setLoggedInProfile(response.data().signIn());
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
                         }
 
                         @Override
                         public void onFailure(@NotNull ApolloException e) {
                             LoginActivity.this.runOnUiThread(() -> Toast.makeText(LoginActivity.this,e.toString(),Toast.LENGTH_LONG).show());
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
                         }
                     }
             );
