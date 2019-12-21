@@ -1,5 +1,7 @@
 package com.inter_iit_hackathon.hackathon_app.classes;
 
+import com.inter_iit_hackathon.hackathon_app.type.Status;
+
 public class FeedClass {
     String profile_url;
     String profile_name;

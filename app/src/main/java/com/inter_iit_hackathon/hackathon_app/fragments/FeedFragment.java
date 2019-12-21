@@ -18,6 +18,7 @@ import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.inter_iit_hackathon.hackathon_app.GetPostsQuery;
 import com.inter_iit_hackathon.hackathon_app.GetProjectsQuery;
 import com.inter_iit_hackathon.hackathon_app.R;
 import com.inter_iit_hackathon.hackathon_app.SignUpMutation;
@@ -32,7 +33,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.mapbox.mapboxsdk.Mapbox.getApplicationContext;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -59,17 +59,40 @@ public class FeedFragment extends Fragment {
         floatingActionButton = root.findViewById(R.id.change_fab);
         rview.setLayoutManager(new LinearLayoutManager(getContext()));
         f = new ArrayList<FeedClass>();
-        floatingActionButton.setOnClickListener(view -> {
-            if(his){
-                his=false;
-            }
-            else{
-                his=true;
-            }
-        });
         FeedAdapter adapter = new FeedAdapter(f);
         rview.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        MyClient.getClient().query(GetPostsQuery.builder().build()).enqueue(new ApolloCall.Callback<GetPostsQuery.Data>() {
+            @Override
+            public void onResponse(@NotNull Response<GetPostsQuery.Data> response) {
+
+                if(response.data()!=null){
+
+                    getActivity().runOnUiThread(()-> Toast.makeText(getContext(),response.data().toString()
+                            ,Toast.LENGTH_SHORT).show());
+
+                    GetPostsQuery.GetPosts getPosts = response.data().getPosts();
+                    f.add(new FeedClass("https://source.unsplash.com/random/800x800",getPosts.author().name(),getPosts.photo(),getPosts.title(),getPosts.content(),getPosts.status().rawValue(),getPosts.createdAt()));
+                    adapter.notifyDataSetChanged();
+                }
+                else{
+
+                    getActivity().runOnUiThread(()-> Toast.makeText(getContext(),"Null Bruh",Toast.LENGTH_SHORT).show());
+
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull ApolloException e) {
+                getActivity().runOnUiThread(()->{
+                    Toast.makeText(getContext(),e.toString(),Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+        floatingActionButton.setOnClickListener(view -> {
+
+
+        });
         return root;
     }
 }
