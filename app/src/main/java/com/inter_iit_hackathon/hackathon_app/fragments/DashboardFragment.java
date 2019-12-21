@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -38,7 +39,8 @@ public class DashboardFragment extends Fragment {
     private FloatingActionButton fab_thumbs_up,fab_thumbs_down;
     private ArrayList<DashboardData> list = new ArrayList<>();
     private CardStackLayoutManager cardStackLayoutManager;
-
+    private ProgressBar bar;
+    private Boolean state = Boolean.TRUE;
 
     public static DashboardFragment newInstance() {
        return new DashboardFragment();
@@ -57,31 +59,36 @@ public class DashboardFragment extends Fragment {
         fab_thumbs_up = root.findViewById(R.id.fab_up);
         cardStackLayoutManager = new CardStackLayoutManager(getContext());
         cardStackView.setLayoutManager(cardStackLayoutManager);
+        bar = root.findViewById(R.id.progress);
         final CardStackAdapter c = new CardStackAdapter(list, getContext());
         cardStackView.setAdapter(c);
-        MyClient.getClient().query(GetProjectsQuery.builder().build()).enqueue(new ApolloCall.Callback<GetProjectsQuery.Data>() {
-            @Override
-            public void onResponse(@NotNull Response<GetProjectsQuery.Data> response) {
-                if(response.data()!=null) {
-//                    getActivity().runOnUiThread(()
 
-                    List<GetProjectsQuery.Project> project = response.data().projects();
-                    for (int i = 0; i < project.size(); i++) {
-                        list.add(new DashboardData(project.get(i).photo(), project.get(i).title(), project.get(i).description(), project.get(i).updatedAt(), project.get(i).author().name()));
-//                    }
-//                    c.notifyDataSetChanged();
+        if(state){
+            state=false;
+            MyClient.getClient().query(GetProjectsQuery.builder().build()).enqueue(new ApolloCall.Callback<GetProjectsQuery.Data>() {
+                @Override
+                public void onResponse(@NotNull Response<GetProjectsQuery.Data> response) {
+                    if(response.data()!=null) {
+//                    getActivity().runOnUiThread(()
+                        List<GetProjectsQuery.Project> project = response.data().projects();
+                        for (int i = 0; i < project.size(); i++) {
+                            list.add(new DashboardData(project.get(i).photo(), project.get(i).title(), project.get(i).description(), project.get(i).updatedAt(), project.get(i).author().name()));
+
+                        }
+                        c.notifyDataSetChanged();
+                        state=true;
+                    }
+                    else{
+                        getActivity().runOnUiThread(() -> Toast.makeText(getContext(),"Sorry, data not available",Toast.LENGTH_SHORT).show());
                     }
                 }
-                else{
-                    getActivity().runOnUiThread(() -> Toast.makeText(getContext(),"Sorry, data not available",Toast.LENGTH_SHORT).show());
-                }
-            }
 
-            @Override
-            public void onFailure(@NotNull ApolloException e) {
-                getActivity().runOnUiThread(() -> Toast.makeText(getContext(),e.toString(),Toast.LENGTH_SHORT).show());
-            }
-        });
+                @Override
+                public void onFailure(@NotNull ApolloException e) {
+                    getActivity().runOnUiThread(() -> Toast.makeText(getContext(),e.toString(),Toast.LENGTH_SHORT).show());
+                }
+            });
+        }
 
         fab_thumbs_down.setOnClickListener(new View.OnClickListener() {
             @Override
