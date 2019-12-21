@@ -15,6 +15,7 @@ import com.apollographql.apollo.exception.ApolloException;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.inter_iit_hackathon.hackathon_app.GetProjectsQuery;
 import com.inter_iit_hackathon.hackathon_app.R;
+import com.inter_iit_hackathon.hackathon_app.activities.MainActivity;
 import com.inter_iit_hackathon.hackathon_app.adapters.CardStackAdapter;
 import com.inter_iit_hackathon.hackathon_app.classes.DashboardData;
 import com.inter_iit_hackathon.hackathon_app.graphql_client.MyClient;
@@ -61,20 +62,24 @@ public class DashboardFragment extends Fragment {
         MyClient.getClient().query(GetProjectsQuery.builder().build()).enqueue(new ApolloCall.Callback<GetProjectsQuery.Data>() {
             @Override
             public void onResponse(@NotNull Response<GetProjectsQuery.Data> response) {
-                if(response.data()!=null){
+                if(response.data()!=null) {
+//                    getActivity().runOnUiThread(()
+
                     List<GetProjectsQuery.Project> project = response.data().projects();
-                    for(int i=0;i<project.size();i++){
+                    for (int i = 0; i < project.size(); i++) {
                         list.add(new DashboardData(project.get(i).photo(), project.get(i).title(), project.get(i).description(), project.get(i).updatedAt(), project.get(i).author().name()));
+//                    }
+//                    c.notifyDataSetChanged();
                     }
                 }
                 else{
-                    Toast.makeText(getContext(),"Sorry, data not available",Toast.LENGTH_SHORT).show();
+                    getActivity().runOnUiThread(() -> Toast.makeText(getContext(),"Sorry, data not available",Toast.LENGTH_SHORT).show());
                 }
-                c.notifyDataSetChanged();
             }
 
             @Override
             public void onFailure(@NotNull ApolloException e) {
+                getActivity().runOnUiThread(() -> Toast.makeText(getContext(),e.toString(),Toast.LENGTH_SHORT).show());
             }
         });
 

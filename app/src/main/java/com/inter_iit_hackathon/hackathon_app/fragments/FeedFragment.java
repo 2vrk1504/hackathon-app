@@ -16,6 +16,7 @@ import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.api.Query;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.inter_iit_hackathon.hackathon_app.GetProjectsQuery;
 import com.inter_iit_hackathon.hackathon_app.R;
@@ -39,7 +40,9 @@ import static com.mapbox.mapboxsdk.Mapbox.getApplicationContext;
 public class FeedFragment extends Fragment {
 
     RecyclerView rview;
-
+    FloatingActionButton floatingActionButton;
+    Boolean his = Boolean.TRUE;
+    ArrayList<FeedClass> f;
     public static FeedFragment newInstance() {
        return new FeedFragment();
     }
@@ -53,9 +56,17 @@ public class FeedFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_feed, container, false);
         rview = root.findViewById(R.id.recycler);
+        floatingActionButton = root.findViewById(R.id.change_fab);
         rview.setLayoutManager(new LinearLayoutManager(getContext()));
-        ArrayList<FeedClass> f = new ArrayList<FeedClass>();
-
+        f = new ArrayList<FeedClass>();
+        floatingActionButton.setOnClickListener(view -> {
+            if(his){
+                his=false;
+            }
+            else{
+                his=true;
+            }
+        });
         FeedAdapter adapter = new FeedAdapter(f);
         rview.setAdapter(adapter);
         adapter.notifyDataSetChanged();
