@@ -110,13 +110,14 @@ public class NewPostActivity extends AppCompatActivity {
                     ).enqueue(new ApolloCall.Callback<CreatePostMutation.Data>() {
                         @Override
                         public void onResponse(@NotNull Response<CreatePostMutation.Data> response) {
-                            Toast.makeText(NewPostActivity.this, "Added New Post!", Toast.LENGTH_LONG).show();
+                            runOnUiThread(()-> Toast.makeText(NewPostActivity.this, "Added New Post!", Toast.LENGTH_LONG).show());
+                            finish();
                         }
 
                         @Override
                         public void onFailure(@NotNull ApolloException e) {
                             finish();
-                            Toast.makeText(getApplicationContext(), "Some error occurred.", Toast.LENGTH_SHORT).show();
+                            runOnUiThread(()-> Toast.makeText(NewPostActivity.this, "Error occurred", Toast.LENGTH_LONG).show());
                         }
                     });
                 }

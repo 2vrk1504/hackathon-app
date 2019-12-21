@@ -1,0 +1,16 @@
+query GetPosts{
+    getPosts{
+        photo
+        id
+        content
+        title
+        numberOfSerious
+        numberOfTrivial
+        author{
+            id
+            name
+        }
+        createdAt
+        status
+    }
+}

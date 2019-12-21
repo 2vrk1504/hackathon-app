@@ -15,27 +15,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.apollographql.apollo.ApolloCall;
-import com.apollographql.apollo.api.Mutation;
-import com.apollographql.apollo.api.Operation;
+import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
-import com.cloudinary.Cloudinary;
-import com.cloudinary.android.MediaManager;
-import com.cloudinary.android.callback.ErrorInfo;
-import com.cloudinary.android.callback.UploadCallback;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.inter_iit_hackathon.hackathon_app.GetProjectsQuery;
 import com.inter_iit_hackathon.hackathon_app.R;
-import com.inter_iit_hackathon.hackathon_app.SignInMutation;
 import com.inter_iit_hackathon.hackathon_app.activities.NewPostActivity;
 import com.inter_iit_hackathon.hackathon_app.adapters.CardStackAdapter;
 import com.inter_iit_hackathon.hackathon_app.classes.DashboardData;
@@ -80,7 +71,6 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MediaManager.init(getContext());
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         sessionManager = new SessionManager(getContext());
@@ -98,36 +88,32 @@ public class DashboardFragment extends Fragment {
 
 
         cardStackView.setLayoutManager(new CardStackLayoutManager(getContext()));
-        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar Patel Road", "Very bad condition, pls halp", "12th Dec 2019", "Anbudan Siva"));
-        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar Patel Road", "Very bad condition, pls halp", "12th Dec 2019", "Anbudan Siva"));
-        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar Patel Road", "Very bad condition, pls halp", "12th Dec 2019", "Anbudan Siva"));
-        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar Patel Road", "Very bad condition, pls halp", "12th Dec 2019", "Anbudan Siva"));
-        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar Patel Road", "Very bad condition, pls halp", "12th Dec 2019", "Anbudan Siva"));
 
         cardStackLayoutManager = new CardStackLayoutManager(getContext());
         cardStackView.setLayoutManager(cardStackLayoutManager);
         final CardStackAdapter c = new CardStackAdapter(list, getContext());
-
         cardStackView.setAdapter(c);
-        c.notifyDataSetChanged();
-
-        MyClient.getClient(sessionManager.getToken()).query(GetProjectsQuery.builder().build()).enqueue(new ApolloCall.Callback<GetProjectsQuery.Data>() {
+        MyClient.getClient(null).query(GetProjectsQuery.builder().build()).enqueue(new ApolloCall.Callback<GetProjectsQuery.Data>() {
             @Override
             public void onResponse(@NotNull Response<GetProjectsQuery.Data> response) {
-                if(response.data()!=null){
+                if(response.data()!=null) {
+//                    getActivity().runOnUiThread(()
+
                     List<GetProjectsQuery.Project> project = response.data().projects();
-                    for(int i=0;i<project.size();i++){
+                    for (int i = 0; i < project.size(); i++) {
                         list.add(new DashboardData(project.get(i).photo(), project.get(i).title(), project.get(i).description(), project.get(i).updatedAt(), project.get(i).author().name()));
+//                    }
+//                    c.notifyDataSetChanged();
                     }
                 }
                 else{
-                    Toast.makeText(getContext(),"Sorry, data not available",Toast.LENGTH_SHORT).show();
+                    getActivity().runOnUiThread(() -> Toast.makeText(getContext(),"Sorry, data not available",Toast.LENGTH_SHORT).show());
                 }
-                c.notifyDataSetChanged();
             }
 
             @Override
             public void onFailure(@NotNull ApolloException e) {
+                getActivity().runOnUiThread(() -> Toast.makeText(getContext(),e.toString(),Toast.LENGTH_SHORT).show());
             }
         });
 
