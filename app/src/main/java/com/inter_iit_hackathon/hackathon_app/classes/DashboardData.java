@@ -1,9 +1,9 @@
 package com.inter_iit_hackathon.hackathon_app.classes;
 
 public class DashboardData {
-    String image;
-    String road_name;
-    String description;
+    private String image;
+    private String road_name;
+    private String description;
 
     public String getImage() {
         return image;

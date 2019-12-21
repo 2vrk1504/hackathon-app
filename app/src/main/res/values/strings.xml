@@ -13,4 +13,11 @@
     <string name="_12th_dec_2019">12th Dec 2019</string>
     <string name="posted_by">Posted by:</string>
     <string name="siva_anbudan">Siva Anbudan</string>
+    <string name="uploaded_on_xx_xx_xxxx">Uploaded On : XX/XX/XXXX</string>
+    <string name="government_update_xxxxxxxx">Government Update : XXXXXXXX</string>
+    <string name="issue_xxxxxxx">Issue : XXXXXXX</string>
+    <string name="crown">crown</string>
+    <string name="level_20">Level : 20</string>
+    <string name="profile_image">profile image</string>
+    <string name="mark_zucc">Mark@Zucc</string>
 </resources>

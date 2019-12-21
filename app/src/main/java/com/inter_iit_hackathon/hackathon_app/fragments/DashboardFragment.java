@@ -22,9 +22,9 @@ import java.util.ArrayList;
  */
 public class DashboardFragment extends Fragment {
 
-    CardStackView cardStackView;
-    FloatingActionButton fab_thumbs_up,fab_thumbs_down;
-    ArrayList<DashboardData> list = new ArrayList<>();
+    private CardStackView cardStackView;
+    private FloatingActionButton fab_thumbs_up,fab_thumbs_down;
+    private ArrayList<DashboardData> list = new ArrayList<>();
 
     public static DashboardFragment newInstance() {
        return new DashboardFragment();
