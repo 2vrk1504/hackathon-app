@@ -14,36 +14,61 @@
 
             <ImageView
                 android:id="@+id/image_view"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
                 android:layout_width="match_parent"
                 android:background="#ffffff"
                 android:contentDescription="@string/streetimage"
                 android:scaleType="centerCrop"
                 android:src="@drawable/profile" />
 
-                <TextView
-                    android:id="@+id/road_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center"
-                    android:text="@string/sardar_patel_road"
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:maxLines="8"
-                    android:textSize="30sp"
-                    />
-                    <TextView
-                        android:id="@+id/postedOn"
-                        android:layout_width="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_height="wrap_content"
-                        android:text="@string/_12th_dec_2019"
-                        android:textSize="20sp"
-                        android:layout_margin="20dp"
-                        />
+        <TextView
+            android:id="@+id/road_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:gravity="center"
+            android:maxLines="8"
+            android:text="@string/sardar_patel_road"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:layout_weight="0.02"
+            android:text="@string/_12th_dec_2019"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="0.001">
+
+            <TextView
+                android:id="@+id/postedOn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:gravity="start"
+                android:layout_weight="1"
+                android:text="@string/_4_hours_ago"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_weight="2"
+                android:gravity="end"
+                android:id="@+id/userPut"
+                android:text="@string/luckymark123"/>
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -23,22 +24,35 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.apollographql.apollo.ApolloCall;
+import com.apollographql.apollo.api.Mutation;
+import com.apollographql.apollo.api.Operation;
+import com.apollographql.apollo.exception.ApolloException;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.android.MediaManager;
 import com.cloudinary.android.callback.ErrorInfo;
 import com.cloudinary.android.callback.UploadCallback;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.inter_iit_hackathon.hackathon_app.GetProjectsQuery;
 import com.inter_iit_hackathon.hackathon_app.R;
-import com.inter_iit_hackathon.hackathon_app.activities.CameraHolderActivity;
+import com.inter_iit_hackathon.hackathon_app.SignInMutation;
+import com.inter_iit_hackathon.hackathon_app.activities.NewPostActivity;
 import com.inter_iit_hackathon.hackathon_app.adapters.CardStackAdapter;
 import com.inter_iit_hackathon.hackathon_app.classes.DashboardData;
+import com.inter_iit_hackathon.hackathon_app.graphql_client.MyClient;
+import com.inter_iit_hackathon.hackathon_app.helpers.SessionManager;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackView;
+import com.yuyakaido.android.cardstackview.Direction;
+import com.yuyakaido.android.cardstackview.SwipeAnimationSetting;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,9 +60,6 @@ import java.util.Map;
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
-/**
- * A placeholder fragment containing a simple view.
- */
 public class DashboardFragment extends Fragment {
 
     public static final int OPEN_CAMERA_FOR_PICTURE = 1002;
@@ -58,6 +69,9 @@ public class DashboardFragment extends Fragment {
     private CardStackView cardStackView;
     private FloatingActionButton fab_thumbs_up,fab_thumbs_down, fab_add_pic;
     private ArrayList<DashboardData> list = new ArrayList<>();
+    private CardStackLayoutManager cardStackLayoutManager;
+
+    private SessionManager sessionManager;
 
     public static DashboardFragment newInstance() {
        return new DashboardFragment();
@@ -69,6 +83,7 @@ public class DashboardFragment extends Fragment {
         MediaManager.init(getContext());
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
+        sessionManager = new SessionManager(getContext());
     }
 
     @Override
@@ -83,21 +98,51 @@ public class DashboardFragment extends Fragment {
 
 
         cardStackView.setLayoutManager(new CardStackLayoutManager(getContext()));
-        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar Patel Road", "Very bad condition, pls halp"));
-        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar Patel Road", "Very bad condition, pls halp"));
-        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar Patel Road", "Very bad condition, pls halp"));
-        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar Patel Road", "Very bad condition, pls halp"));
-        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar Patel Road", "Very bad condition, pls halp"));
-        CardStackAdapter c = new CardStackAdapter(list, getContext());
+        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar Patel Road", "Very bad condition, pls halp", "12th Dec 2019", "Anbudan Siva"));
+        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar Patel Road", "Very bad condition, pls halp", "12th Dec 2019", "Anbudan Siva"));
+        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar Patel Road", "Very bad condition, pls halp", "12th Dec 2019", "Anbudan Siva"));
+        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar Patel Road", "Very bad condition, pls halp", "12th Dec 2019", "Anbudan Siva"));
+        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar Patel Road", "Very bad condition, pls halp", "12th Dec 2019", "Anbudan Siva"));
+
+        cardStackLayoutManager = new CardStackLayoutManager(getContext());
+        cardStackView.setLayoutManager(cardStackLayoutManager);
+        final CardStackAdapter c = new CardStackAdapter(list, getContext());
+
         cardStackView.setAdapter(c);
         c.notifyDataSetChanged();
 
+        MyClient.getClient(sessionManager.getToken()).query(GetProjectsQuery.builder().build()).enqueue(new ApolloCall.Callback<GetProjectsQuery.Data>() {
+            @Override
+            public void onResponse(@NotNull Response<GetProjectsQuery.Data> response) {
+                if(response.data()!=null){
+                    List<GetProjectsQuery.Project> project = response.data().projects();
+                    for(int i=0;i<project.size();i++){
+                        list.add(new DashboardData(project.get(i).photo(), project.get(i).title(), project.get(i).description(), project.get(i).updatedAt(), project.get(i).author().name()));
+                    }
+                }
+                else{
+                    Toast.makeText(getContext(),"Sorry, data not available",Toast.LENGTH_SHORT).show();
+                }
+                c.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(@NotNull ApolloException e) {
+            }
+        });
+
+        fab_thumbs_down.setOnClickListener(view -> {
+            SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder().setDirection(Direction.Left).build();
+            cardStackLayoutManager.setSwipeAnimationSetting(setting);
+            cardStackView.swipe();
+        });
+        fab_thumbs_up.setOnClickListener(view -> {
+            SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder().setDirection(Direction.Right).build();
+            cardStackLayoutManager.setSwipeAnimationSetting(setting);
+            cardStackView.swipe();
+        });
         return root;
     }
-
-
-
-
 
     File photoFile;
 
@@ -127,30 +172,9 @@ public class DashboardFragment extends Fragment {
 
         if (requestCode == OPEN_CAMERA_FOR_PICTURE) {
             if (resultCode == RESULT_OK) {
-                String requestId = MediaManager.get().upload(photoFile.getPath()).callback(new UploadCallback() {
-                    @Override
-                    public void onStart(String requestId) {
-                        progressDialog = ProgressDialog.show(getContext(), "Please wait", "Uploading image");
-                    }
-                    @Override
-                    public void onProgress(String requestId, long bytes, long totalBytes) {
-                    }
-                    @Override
-                    public void onSuccess(String requestId, Map resultData) {
-                        progressDialog.dismiss();
-                        String url = (String) resultData.get("secure_url");
-                        Toast.makeText(getContext(), url, Toast.LENGTH_LONG).show();
-                    }
-                    @Override
-                    public void onError(String requestId, ErrorInfo error) {
-                        Log.e("Vallabh", "bruuuu");
-                        progressDialog.dismiss();
-                        Toast.makeText(getContext(), "Error", Toast.LENGTH_LONG).show();
-                    }
-                    @Override
-                    public void onReschedule(String requestId, ErrorInfo error) {
-                        // your code here
-                    }}).dispatch();
+                Intent intent = new Intent(getActivity(), NewPostActivity.class);
+                intent.putExtra("FILENAME", photoFile.getAbsolutePath());
+                startActivity(intent);
             }
         }
     }

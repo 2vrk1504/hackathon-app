@@ -39,7 +39,9 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Glide.with(holder.imageView).load(data.get(position).getImage()).placeholder(R.drawable.ic_launcher_foreground).into(holder.imageView);
         holder.roadName.setText(data.get(position).getRoad_name());
-        holder.postedOn.setText(data.get(position).getDescription());
+        holder.postedOn.setText(data.get(position).getPostedOn());
+        holder.desc.setText(data.get(position).getDescription());
+        holder.user.setText(data.get(position).getPutUserName());
     }
 
     @Override
@@ -52,8 +54,8 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
         ImageView imageView;
         TextView roadName;
         TextView postedOn;
-
-        private static int shortAnimationDuration = -1;
+        TextView desc;
+        TextView user;
 
 
         public ViewHolder(View itemView) {
@@ -61,7 +63,8 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
             this.imageView = itemView.findViewById(R.id.image_view);
             this.roadName = itemView.findViewById(R.id.road_name);
             this.postedOn = itemView.findViewById(R.id.postedOn);
-
+            this.desc = itemView.findViewById(R.id.desc);
+            this.user = itemView.findViewById(R.id.userPut);
         }
 
     }

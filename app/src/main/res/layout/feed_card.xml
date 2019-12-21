@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="400dp"
+            android:layout_height="320dp"
             android:layout_below="@id/lin1"
             android:id="@+id/street_image"
             android:scaleType="centerCrop"
@@ -62,37 +62,40 @@
         android:id="@+id/street_name"
         android:maxLines="8"
         android:layout_below="@id/street_image"
-        android:layout_margin="5dp"
-        android:textSize="25sp"/>
+        android:layout_margin="2dp"
+        android:textSize="15sp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#000"
-        android:layout_below="@id/street_name"
-        android:id="@+id/upload_date"
-        android:maxLines="8"
-        android:layout_margin="5dp"
-        android:text="@string/uploaded_on_xx_xx_xxxx"
-        android:textSize="20sp" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/issue"
-        android:layout_margin="5dp"
-        android:layout_below="@id/upload_date"
+        android:layout_margin="2dp"
+        android:layout_below="@id/street_name"
         android:text="@string/issue_xxxxxxx"
-        android:textColor="#FF5722"
-        android:textSize="20sp" />
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/issue"
-        android:layout_margin="5dp"
-        android:textSize="20sp"
+        android:layout_margin="2dp"
+        android:textSize="12sp"
         android:id="@+id/government_update"
-        android:textColor="#0022FF"
+        android:textColor="#575B66"
         android:text="@string/government_update_xxxxxxxx"/>
+
+    <TextView
+        android:id="@+id/upload_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/government_update"
+        android:layout_margin="5dp"
+        android:maxLines="8"
+        android:text="@string/_4_hours_ago"
+        android:textColor="#000"
+        android:textSize="10sp"
+        android:gravity="start"
+        tools:ignore="SmallSp" />
+
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
