@@ -56,8 +56,8 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_gravity="center"
             android:layout_margin="20dp"
             android:contentDescription="@string/crown"
@@ -70,7 +70,7 @@
 
             android:layout_margin="20dp"
             android:gravity="center"
-            android:text="@string/level_20"
+            android:text="@string/reputation"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="#FFFFFF"
             android:textSize="30sp"
