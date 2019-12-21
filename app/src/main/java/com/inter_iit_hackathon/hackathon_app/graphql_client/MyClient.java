@@ -17,34 +17,33 @@ public class MyClient {
 
     MyClient(String authToken){
         this.authToken = authToken;
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(chain -> {
-                    Request original = chain.request();
-                    Request.Builder builder = original.newBuilder().method(original.method(), original.body());
-                    builder.header("Authorization", "Bearer "+ authToken);
-                    return chain.proceed(builder.build());
-                })
-                .build();
 
+        OkHttpClient okHttpClient;
+        if(authToken == null){
+            okHttpClient = new OkHttpClient.Builder()
+                            .build();
+        }
+        else {
+            okHttpClient = new OkHttpClient.Builder()
+                    .addInterceptor(chain -> {
+                        Request original = chain.request();
+                        Request.Builder builder = original.newBuilder().method(original.method(), original.body());
+                        builder.header("Authorization", "Bearer "+ authToken);
+                        return chain.proceed(builder.build());
+                    })
+                    .build();
+        }
         apolloClient = ApolloClient.builder()
                 .serverUrl(BASE_URL)
                 .okHttpClient(okHttpClient)
                 .build();
     }
-
-    MyClient(){
-        this.authToken = authToken;
-        OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
-
-        apolloClient = ApolloClient.builder()
-                .serverUrl(BASE_URL)
-                .okHttpClient(okHttpClient)
-                .build();
-    }
-
 
     public static MyClient getInstance(String authToken) {
-        if(instance == null || !instance.authToken.equals(authToken)){
+        if(instance == null){
+            instance = new MyClient(null);
+        }
+        else if(authToken != null && !authToken.equals(instance.authToken)){
             instance = new MyClient(authToken);
         }
         return instance;
