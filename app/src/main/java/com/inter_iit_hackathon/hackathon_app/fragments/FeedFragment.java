@@ -63,16 +63,18 @@ public class FeedFragment extends Fragment {
         rview.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
-        MyClient.getClient().query(GetPostsQuery.builder().build()).enqueue(new ApolloCall.Callback<GetPostsQuery.Data>() {
+        MyClient.getClient(null).query(GetPostsQuery.builder().build()).enqueue(new ApolloCall.Callback<GetPostsQuery.Data>() {
             @Override
             public void onResponse(@NotNull Response<GetPostsQuery.Data> response) {
+
                 if(response.data()!=null){
+
                     getActivity().runOnUiThread(()-> Toast.makeText(getContext(),response.data().toString()
                             ,Toast.LENGTH_SHORT).show());
 
                     GetPostsQuery.GetPosts getPosts = response.data().getPosts();
                     f.add(new FeedClass("https://source.unsplash.com/random/800x800",getPosts.author().name(),getPosts.photo(),getPosts.title(),getPosts.content(),getPosts.status().rawValue(),getPosts.createdAt()));
-//                    adapter.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
                 }
                 else{
 

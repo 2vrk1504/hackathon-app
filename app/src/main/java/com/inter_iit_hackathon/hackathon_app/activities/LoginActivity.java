@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
             String password = til_password.getEditText().getText().toString();
 
             // request
-            MyClient.getClient().mutate(
+            MyClient.getClient(null).mutate(
                     SignInMutation.builder()
                     .email(email)
                     .password(password)

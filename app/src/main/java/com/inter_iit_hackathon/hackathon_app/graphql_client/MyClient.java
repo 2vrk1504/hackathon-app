@@ -4,6 +4,7 @@ import com.apollographql.apollo.ApolloClient;
 import com.inter_iit_hackathon.hackathon_app.SignInMutation;
 
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 public class MyClient {
 
@@ -11,20 +12,46 @@ public class MyClient {
 
     private static final String BASE_URL = "http://10.70.20.160:4000";
 
-    OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
+    ApolloClient apolloClient;
+    String authToken;
 
-    public ApolloClient apolloClient = ApolloClient.builder()
-            .serverUrl(BASE_URL)
-            .okHttpClient(okHttpClient)
-            .build();
+    MyClient(String authToken){
+        this.authToken = authToken;
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(chain -> {
+                    Request original = chain.request();
+                    Request.Builder builder = original.newBuilder().method(original.method(), original.body());
+                    builder.header("Authorization", "Bearer "+ authToken);
+                    return chain.proceed(builder.build());
+                })
+                .build();
 
-    public static MyClient getInstance() {
-        if(instance == null)
-            instance = new MyClient();
+        apolloClient = ApolloClient.builder()
+                .serverUrl(BASE_URL)
+                .okHttpClient(okHttpClient)
+                .build();
+    }
+
+    MyClient(){
+        this.authToken = authToken;
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
+
+        apolloClient = ApolloClient.builder()
+                .serverUrl(BASE_URL)
+                .okHttpClient(okHttpClient)
+                .build();
+    }
+
+
+    public static MyClient getInstance(String authToken) {
+        if(instance == null || !instance.authToken.equals(authToken)){
+            instance = new MyClient(authToken);
+        }
         return instance;
     }
 
-    public static ApolloClient getClient(){
-        return getInstance().apolloClient;
+    public static ApolloClient getClient(String authToken){
+        return getInstance(authToken).apolloClient;
     }
+
 }

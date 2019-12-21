@@ -52,7 +52,7 @@ public class SignUpActivity extends AppCompatActivity {
             } else {
                 if (pass.equals(repass)) {
                     // request
-                    MyClient.getClient().mutate(
+                    MyClient.getClient(null).mutate(
                             SignUpMutation.builder()
                                     .email(email)
                                     .name(user)
