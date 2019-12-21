@@ -62,6 +62,7 @@ public class FeedFragment extends Fragment {
         FeedAdapter adapter = new FeedAdapter(f);
         rview.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
         MyClient.getClient(null).query(GetPostsQuery.builder().build()).enqueue(new ApolloCall.Callback<GetPostsQuery.Data>() {
             @Override
             public void onResponse(@NotNull Response<GetPostsQuery.Data> response) {

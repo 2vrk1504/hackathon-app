@@ -12,17 +12,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="850e13d4-b976-4f73-afd1-423dea663304" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/graphql/com/inter_iit_hackathon/hackathon_app/schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/graphql/com/inter_iit_hackathon/hackathon_app/schema.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/classes/FeedClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/classes/FeedClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/fragments/FeedFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/fragments/FeedFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/fragments/DashboardFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/fragments/DashboardFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/feed_card.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/feed_card.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_dashboard.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_dashboard.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -67,20 +60,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/activities/SignUpActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="74" column="22" selection-start-line="74" selection-start-column="22" selection-end-line="74" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/fragments/DashboardFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="61" column="70" lean-forward="true" selection-start-line="61" selection-start-column="70" selection-end-line="61" selection-end-column="70" />
+            <state relative-caret-position="375">
+              <caret line="61" column="47" selection-start-line="61" selection-start-column="47" selection-end-line="61" selection-end-column="47" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -100,11 +84,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/fragments/FeedFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="70" column="41" selection-start-line="70" selection-start-column="41" selection-end-line="70" selection-end-column="41" />
+            <state relative-caret-position="358">
+              <caret line="64" column="8" selection-start-line="64" selection-start-column="8" selection-end-line="64" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -113,10 +97,37 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/activities/MainActivity.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/feed_card.xml">
+          <provider editor-type-id="android-designer2" />
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="28" column="35" selection-start-line="28" selection-start-column="35" selection-end-line="28" selection-end-column="35" />
+            <state relative-caret-position="153">
+              <caret line="8" column="29" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_feed.xml">
+          <provider editor-type-id="android-designer2" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="20" column="2" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_my_map.xml">
+          <provider editor-type-id="android-designer2" />
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_dashboard.xml">
+          <provider editor-type-id="android-designer2" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="214">
+              <caret line="29" column="33" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -164,7 +175,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_swipe.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/custom_progressbar_horizontal.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/rounded_frame.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_dashboard.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/adapters/FeedAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/classes/FeedClass.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
@@ -175,7 +185,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/street_card.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/classes/DashboardData.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/adapters/CardStackAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/feed_card.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/classes/ClusterPointers.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/fragments/MyMapFragment.java" />
@@ -183,10 +192,12 @@
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/activities/LoginActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/fragments/ProfileFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/fragments/DashboardFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/swich.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_feed.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/fragments/FeedFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/feed_card.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_dashboard.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/fragments/DashboardFragment.java" />
       </list>
     </option>
   </component>
@@ -542,7 +553,21 @@
       <option name="project" value="LOCAL" />
       <updated>1576938220168</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Changed login signup and feed">
+      <created>1576940424789</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1576940424789</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Changed login signup and feed">
+      <created>1576940984152</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1576940984152</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TodoView">
@@ -698,10 +723,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_my_map.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_sign_up.xml">
       <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
@@ -723,14 +744,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_dashboard.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="31" column="44" selection-start-line="31" selection-start-column="44" selection-end-line="31" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/street_card.xml">
       <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
@@ -742,18 +755,6 @@
             <element signature="e#1659#1683#0" expanded="true" />
             <element signature="e#2152#2174#0" expanded="true" />
             <element signature="e#2549#2571#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/feed_card.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="877">
-          <caret line="68" column="37" selection-start-line="68" selection-start-column="37" selection-end-line="68" selection-end-column="37" />
-          <folding>
-            <element signature="e#3210#3246#0" expanded="true" />
-            <element signature="e#3474#3496#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -812,14 +813,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_all_inclusive_black_24dp.xml">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_feed.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="19" column="35" selection-start-line="19" selection-start-column="35" selection-end-line="19" selection-end-column="35" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/build/generated/source/apollo/classes/debug/com/inter_iit_hackathon/hackathon_app/GetProjectsQuery.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -927,6 +920,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/fragments/ProfileFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_my_map.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_feed.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="20" column="2" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/fragments/MyMapFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
@@ -937,27 +949,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/fragments/ProfileFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/fragments/FeedFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/fragments/DashboardFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="61" column="70" lean-forward="true" selection-start-line="61" selection-start-column="70" selection-end-line="61" selection-end-column="70" />
+        <state relative-caret-position="358">
+          <caret line="64" column="8" selection-start-line="64" selection-start-column="8" selection-end-line="64" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/fragments/FeedFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/feed_card.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="70" column="41" selection-start-line="70" selection-start-column="41" selection-end-line="70" selection-end-column="41" />
+        <state relative-caret-position="153">
+          <caret line="8" column="29" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_dashboard.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="29" column="33" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/inter_iit_hackathon/hackathon_app/fragments/DashboardFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="61" column="47" selection-start-line="61" selection-start-column="47" selection-end-line="61" selection-end-column="47" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
