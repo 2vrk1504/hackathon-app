@@ -14,6 +14,8 @@ import com.inter_iit_hackathon.hackathon_app.adapters.CardStackAdapter;
 import com.inter_iit_hackathon.hackathon_app.classes.DashboardData;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackView;
+import com.yuyakaido.android.cardstackview.Direction;
+import com.yuyakaido.android.cardstackview.SwipeAnimationSetting;
 
 import java.util.ArrayList;
 
@@ -25,6 +27,8 @@ public class DashboardFragment extends Fragment {
     private CardStackView cardStackView;
     private FloatingActionButton fab_thumbs_up,fab_thumbs_down;
     private ArrayList<DashboardData> list = new ArrayList<>();
+    private CardStackLayoutManager cardStackLayoutManager;
+
 
     public static DashboardFragment newInstance() {
        return new DashboardFragment();
@@ -41,15 +45,32 @@ public class DashboardFragment extends Fragment {
         cardStackView = root.findViewById(R.id.cardstackview);
         fab_thumbs_down = root.findViewById(R.id.fab_down);
         fab_thumbs_up = root.findViewById(R.id.fab_up);
-        cardStackView.setLayoutManager(new CardStackLayoutManager(getContext()));
-        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar  Patel Road", "Very bad condition, pls halp"));
-        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar  Patel Road", "Very bad condition, pls halp"));
-        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar  Patel Road", "Very bad condition, pls halp"));
-        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar  Patel Road", "Very bad condition, pls halp"));
-        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar  Patel Road", "Very bad condition, pls halp"));
-        CardStackAdapter c = new CardStackAdapter(list, getContext());
+        cardStackLayoutManager = new CardStackLayoutManager(getContext());
+        cardStackView.setLayoutManager(cardStackLayoutManager);
+        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar  Patel Road", "Very bad condition, pls halp", "22/12/1999", "LuckyMark123"));
+        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar  Patel Road", "Very bad condition, pls halp", "22/12/1999", "LuckyMark123"));
+        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar  Patel Road", "Very bad condition, pls halp", "22/12/1999", "LuckyMark123"));
+        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar  Patel Road", "Very bad condition, pls halp", "22/12/1999","LuckyMark123"));
+        list.add(new DashboardData("https://source.unsplash.com/user/erondu/900x1600", "Sardar  Patel Road", "Very bad condition, pls halp", "22/12/1999", "LuckyMark123"));
+        final CardStackAdapter c = new CardStackAdapter(list, getContext());
         cardStackView.setAdapter(c);
         c.notifyDataSetChanged();
+        fab_thumbs_down.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder().setDirection(Direction.Left).build();
+                cardStackLayoutManager.setSwipeAnimationSetting(setting);
+                cardStackView.swipe();
+            }
+        });
+        fab_thumbs_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder().setDirection(Direction.Right).build();
+                cardStackLayoutManager.setSwipeAnimationSetting(setting);
+                cardStackView.swipe();
+            }
+        });
         return root;
     }
 }
