@@ -28,11 +28,11 @@ import com.apollographql.apollo.exception.ApolloException;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.inter_iit_hackathon.hackathon_app.GetProjectsQuery;
 import com.inter_iit_hackathon.hackathon_app.R;
+import com.inter_iit_hackathon.hackathon_app.activities.MainActivity;
 import com.inter_iit_hackathon.hackathon_app.activities.NewPostActivity;
 import com.inter_iit_hackathon.hackathon_app.adapters.CardStackAdapter;
 import com.inter_iit_hackathon.hackathon_app.classes.DashboardData;
 import com.inter_iit_hackathon.hackathon_app.graphql_client.MyClient;
-import com.inter_iit_hackathon.hackathon_app.helpers.SessionManager;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackView;
 import com.yuyakaido.android.cardstackview.Direction;
@@ -49,9 +49,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
+/**
+ * A placeholder fragment containing a simple view.
+ */
 public class DashboardFragment extends Fragment {
 
     public static final int OPEN_CAMERA_FOR_PICTURE = 1002;
@@ -59,11 +61,12 @@ public class DashboardFragment extends Fragment {
 
     private ProgressDialog progressDialog;
     private CardStackView cardStackView;
-    private FloatingActionButton fab_thumbs_up,fab_thumbs_down, fab_add_pic;
+    private FloatingActionButton fab_thumbs_up,fab_thumbs_down;
     private ArrayList<DashboardData> list = new ArrayList<>();
     private CardStackLayoutManager cardStackLayoutManager;
     private ProgressBar bar;
     private Boolean state = Boolean.TRUE;
+    private FloatingActionButton fab_add_pic;
 
     public static DashboardFragment newInstance() {
        return new DashboardFragment();
@@ -89,7 +92,7 @@ public class DashboardFragment extends Fragment {
         bar = root.findViewById(R.id.progress);
         final CardStackAdapter c = new CardStackAdapter(list, getContext());
         cardStackView.setAdapter(c);
-
+        bar.setVisibility(View.VISIBLE);
         if(state){
             state=false;
             MyClient.getClient(null).query(GetProjectsQuery.builder().build()).enqueue(new ApolloCall.Callback<GetProjectsQuery.Data>() {
@@ -102,8 +105,11 @@ public class DashboardFragment extends Fragment {
                             list.add(new DashboardData(project.get(i).photo(), project.get(i).title(), project.get(i).description(), project.get(i).updatedAt(), project.get(i).author().name()));
 
                         }
-                        c.notifyDataSetChanged();
                         state=true;
+                        getActivity().runOnUiThread(() -> {
+                            bar.setVisibility(View.GONE);
+                            c.notifyDataSetChanged();
+                        });
                     }
                     else{
                         getActivity().runOnUiThread(() -> Toast.makeText(getContext(),"Sorry, data not available",Toast.LENGTH_SHORT).show());
@@ -117,15 +123,21 @@ public class DashboardFragment extends Fragment {
             });
         }
 
-        fab_thumbs_down.setOnClickListener(view -> {
-            SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder().setDirection(Direction.Left).build();
-            cardStackLayoutManager.setSwipeAnimationSetting(setting);
-            cardStackView.swipe();
+        fab_thumbs_down.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder().setDirection(Direction.Left).build();
+                cardStackLayoutManager.setSwipeAnimationSetting(setting);
+                cardStackView.swipe();
+            }
         });
-        fab_thumbs_up.setOnClickListener(view -> {
-            SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder().setDirection(Direction.Right).build();
-            cardStackLayoutManager.setSwipeAnimationSetting(setting);
-            cardStackView.swipe();
+        fab_thumbs_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder().setDirection(Direction.Right).build();
+                cardStackLayoutManager.setSwipeAnimationSetting(setting);
+                cardStackView.swipe();
+            }
         });
         return root;
     }
@@ -168,8 +180,11 @@ public class DashboardFragment extends Fragment {
     private File createImageFile() throws IOException {
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
             String imageFileName = "tempPic";
-            File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-            File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+        File storageDir = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.FROYO) {
+            storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        }
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
             return image;
     }
 
