@@ -59,6 +59,7 @@ public class NewPostActivity extends AppCompatActivity {
 
         sessionManager = new SessionManager(this);
 
+//        MediaManager.init(this);
         fullPath = getIntent().getStringExtra("FILENAME");
 
         imageView = findViewById(R.id.tempPic);

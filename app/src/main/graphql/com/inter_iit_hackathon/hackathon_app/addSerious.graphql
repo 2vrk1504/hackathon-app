@@ -1,0 +1,5 @@
+mutation AddSerious($id: String!){
+    addSerious(id: $id){
+        id
+    }
+}

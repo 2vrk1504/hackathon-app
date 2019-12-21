@@ -9,5 +9,9 @@ query GetProjects{
         description
         photo
         updatedAt
+        location{
+            lat
+            lng
+        }
     }
 }

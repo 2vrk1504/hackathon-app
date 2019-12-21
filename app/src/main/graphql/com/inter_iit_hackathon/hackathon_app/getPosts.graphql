@@ -12,5 +12,9 @@ query GetPosts{
         }
         createdAt
         status
+        location{
+            lat
+            lng
+        }
     }
 }

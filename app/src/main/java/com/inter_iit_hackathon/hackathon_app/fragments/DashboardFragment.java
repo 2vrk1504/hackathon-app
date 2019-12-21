@@ -33,6 +33,7 @@ import com.inter_iit_hackathon.hackathon_app.activities.NewPostActivity;
 import com.inter_iit_hackathon.hackathon_app.adapters.CardStackAdapter;
 import com.inter_iit_hackathon.hackathon_app.classes.DashboardData;
 import com.inter_iit_hackathon.hackathon_app.graphql_client.MyClient;
+import com.inter_iit_hackathon.hackathon_app.helpers.SessionManager;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackView;
 import com.yuyakaido.android.cardstackview.Direction;
@@ -67,6 +68,7 @@ public class DashboardFragment extends Fragment {
     private ProgressBar bar;
     private Boolean state = Boolean.TRUE;
     private FloatingActionButton fab_add_pic;
+    private SessionManager sessionManager;
 
     public static DashboardFragment newInstance() {
        return new DashboardFragment();
@@ -75,6 +77,9 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        sessionManager = new SessionManager(getActivity());
     }
 
     @Override
@@ -123,21 +128,41 @@ public class DashboardFragment extends Fragment {
             });
         }
 
-        fab_thumbs_down.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder().setDirection(Direction.Left).build();
-                cardStackLayoutManager.setSwipeAnimationSetting(setting);
-                cardStackView.swipe();
-            }
+        fab_thumbs_down.setOnClickListener(view -> {
+            SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder().setDirection(Direction.Left).build();
+            cardStackLayoutManager.setSwipeAnimationSetting(setting);
+            cardStackView.swipe();
+            MyClient.getClient(sessionManager.getToken()).mutate(
+                    AddTrivialMutation.builder()
+                            .id()
+                            .build()
+            ).enqueue(
+                    new ApolloCall.Callback<AddTrivialMutation.Data>() {
+                        @Override
+                        public void onResponse(@NotNull Response<AddTrivialMutation.Data> response) { }
+
+                        @Override
+                        public void onFailure(@NotNull ApolloException e) { }
+                    }
+            );
         });
-        fab_thumbs_up.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder().setDirection(Direction.Right).build();
-                cardStackLayoutManager.setSwipeAnimationSetting(setting);
-                cardStackView.swipe();
-            }
+        fab_thumbs_up.setOnClickListener(view -> {
+            SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder().setDirection(Direction.Right).build();
+            cardStackLayoutManager.setSwipeAnimationSetting(setting);
+            cardStackView.swipe();
+            MyClient.getClient(sessionManager.getToken()).mutate(
+                    AddTrivialMutation.builder()
+                            .id()
+                            .build()
+            ).enqueue(
+                    new ApolloCall.Callback<AddSeriousMutation.Data>() {
+                        @Override
+                        public void onResponse(@NotNull Response<AddSeriousMutation.Data> response) { }
+
+                        @Override
+                        public void onFailure(@NotNull ApolloException e) { }
+                    }
+            );
         });
         return root;
     }

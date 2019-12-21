@@ -11,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.apollographql.apollo.ApolloCall;
+import com.apollographql.apollo.api.Response;
+import com.apollographql.apollo.exception.ApolloException;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,15 +23,26 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.algo.GridBasedAlgorithm;
+import com.inter_iit_hackathon.hackathon_app.GetPostsQuery;
+import com.inter_iit_hackathon.hackathon_app.GetProjectsQuery;
 import com.inter_iit_hackathon.hackathon_app.R;
 import com.inter_iit_hackathon.hackathon_app.classes.ClusterPointers;
+import com.inter_iit_hackathon.hackathon_app.graphql_client.MyClient;
+import com.inter_iit_hackathon.hackathon_app.helpers.SessionManager;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class MyMapFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private ClusterManager<ClusterPointers> mClusterManager;
+    SessionManager sessionManager;
+
+    private List<ClusterPointers> clusterPointers;
     public MyMapFragment() {}
 
     public static MyMapFragment newInstance() {
@@ -38,6 +52,7 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sessionManager = new SessionManager(getActivity());
     }
 
     @Override
@@ -48,23 +63,12 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
         assert mapFragment != null;
 
         mapFragment.getMapAsync(this);
-
         return root;
     }
+
+
     private void addItems() {
 
-        // Set some lat/lng coordinates to start with.
-        double lat = 51.5145160;
-        double lng = -0.1270060;
-
-//        Add ten cluster items in close proximity, for purposes of this example.
-        for (int i = 0; i < 10; i++) {
-            double offset = i/3;
-            lat = lat + offset;
-            lng = lng + offset;
-            ClusterPointers offsetItem = new ClusterPointers("Heelo",new LatLng(lat,lng));
-            mClusterManager.addItem(offsetItem);
-        }
         mClusterManager.cluster();
     }
     @Override
@@ -77,6 +81,7 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
                 mClusterManager.cluster();
         });
         mMap.setOnMarkerClickListener(mClusterManager);
+        clusterPointers = new ArrayList<>();
         mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<ClusterPointers>() {
             @Override
             public boolean onClusterItemClick(ClusterPointers clusterPointers) {
@@ -84,6 +89,26 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
                 return true;
             }
         });
-        addItems();
+
+        MyClient.getClient(sessionManager.getToken()).query(
+                GetProjectsQuery.builder().build()
+        ).enqueue(new ApolloCall.Callback<GetProjectsQuery.Data>() {
+            @Override
+            public void onResponse(@NotNull Response<GetProjectsQuery.Data> response) {
+                List<GetProjectsQuery.Project> projects = response.data().projects();
+                for(int i = 0; i < projects.size(); i++)
+                    mClusterManager.addItem(new ClusterPointer(projects.get(i).title(), new LatLng(
+                            Double.parseDouble(projects.get(i).location().lat()),
+                            Double.parseDouble(projects.get(i).location().lng())
+                    )));
+
+                mClusterManager.cluster();
+            }
+
+            @Override
+            public void onFailure(@NotNull ApolloException e) {
+
+            }
+        });
     }
 }
