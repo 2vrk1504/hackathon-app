@@ -8,6 +8,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -26,6 +27,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
+import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
 import com.inter_iit_hackathon.hackathon_app.GetPostsQuery;
 import com.inter_iit_hackathon.hackathon_app.GetProjectsQuery;
@@ -47,7 +49,6 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
     SessionManager sessionManager;
     LocationManager locationManager;
 
-    private List<ClusterPointer> clusterPointers;
     public MyMapFragment() {}
 
     public static MyMapFragment newInstance() {
@@ -67,16 +68,20 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
         View root = inflater.inflate(R.layout.fragment_my_map, container, false);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         assert mapFragment != null;
-
         mapFragment.getMapAsync(this);
         return root;
     }
 
 
-    private void addItems() {
-
+    private void addItems(List<GetPostsQuery.GetPost> projects) {
+        for (int i = 0; i < projects.size(); i++)
+            mClusterManager.addItem(new ClusterPointer(projects.get(i).author().name(), projects.get(i).title(), new LatLng(
+                    Double.parseDouble(projects.get(i).location().lat()),
+                    Double.parseDouble(projects.get(i).location().lng())
+            )));
         mClusterManager.cluster();
     }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -93,13 +98,10 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
             Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
             mClusterManager = new ClusterManager<>(Objects.requireNonNull(this.getContext()), mMap);
+
             mMap.setOnCameraIdleListener(() -> mClusterManager.cluster());
             mMap.setOnMarkerClickListener(mClusterManager);
-            clusterPointers = new ArrayList<>();
-            mClusterManager.setOnClusterItemClickListener(clusterPointer -> {
-                Toast.makeText(getContext(), clusterPointer.getPosition().toString(), Toast.LENGTH_SHORT).show();
-                return true;
-            });
+            mClusterManager.setOnClusterItemClickListener(clusterPointerListener);
 
             MyClient.getClient(sessionManager.getToken()).query(
                     GetPostsQuery.builder().build()
@@ -107,14 +109,7 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
                 @Override
                 public void onResponse(@NotNull Response<GetPostsQuery.Data> response) {
                     List<GetPostsQuery.GetPost> projects = response.data().getPosts();
-                    for (int i = 0; i < projects.size(); i++)
-                        mClusterManager.addItem(new ClusterPointer(projects.get(i).author().name(), projects.get(i).title(), new LatLng(
-                                Double.parseDouble(projects.get(i).location().lat()),
-                                Double.parseDouble(projects.get(i).location().lng())
-                        )));
-
-                    getActivity().runOnUiThread(() -> mClusterManager.cluster());
-
+                    getActivity().runOnUiThread(()->addItems(projects));
                 }
 
                 @Override
@@ -124,6 +119,18 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
             });
         }
     }
+
+    final ClusterManager.OnClusterItemClickListener clusterPointerListener = clusterItem -> {
+        String message = "Title: " + clusterItem.getTitle() + "\n"
+                + "Posted By: " + clusterItem.getSnippet();
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Details")
+                .setMessage(message)
+                .setCancelable(false)
+                .show();
+        return true;
+    };
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
