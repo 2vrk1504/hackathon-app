@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.location.Location;
 import android.location.LocationManager;
 import android.media.Image;
@@ -35,7 +36,13 @@ import com.inter_iit_hackathon.hackathon_app.helpers.SessionManager;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 
 public class NewPostActivity extends AppCompatActivity {
@@ -59,7 +66,7 @@ public class NewPostActivity extends AppCompatActivity {
 
         sessionManager = new SessionManager(this);
 
-//        MediaManager.init(this);
+        MediaManager.init(this);
         fullPath = getIntent().getStringExtra("FILENAME");
 
         imageView = findViewById(R.id.tempPic);
@@ -68,10 +75,33 @@ public class NewPostActivity extends AppCompatActivity {
         descTV = findViewById(R.id.new_post_description);
 
         File imgFile = new File(fullPath);
+
         if (imgFile.exists()) {
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            imageView.setImageBitmap(myBitmap);
+            try {
+                FileOutputStream fos = new FileOutputStream(imgFile.getAbsolutePath());
+
+                new Thread(() -> {
+                    myBitmap.compress(Bitmap.CompressFormat.JPEG, 70, fos);
+                    try {
+                        fos.flush();
+                        fos.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }).run();
+
+            } catch (Exception e) {
+                Log.e("Vallabh", "err", e);
+                e.printStackTrace();
+            }
+            Matrix matrix = new Matrix();
+            matrix.postRotate(90);
+            Bitmap rotated = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
+            imageView.setImageBitmap(rotated);
         }
+
+
         post.setOnClickListener(view -> post());
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);

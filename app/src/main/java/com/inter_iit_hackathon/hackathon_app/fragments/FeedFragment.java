@@ -63,33 +63,34 @@ public class FeedFragment extends Fragment {
         rview.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
-        MyClient.getClient(null).query(GetPostsQuery.builder().build()).enqueue(new ApolloCall.Callback<GetPostsQuery.Data>() {
-            @Override
-            public void onResponse(@NotNull Response<GetPostsQuery.Data> response) {
-
-                if(response.data()!=null){
-
-                    getActivity().runOnUiThread(()-> Toast.makeText(getContext(),response.data().toString()
-                            ,Toast.LENGTH_SHORT).show());
-
-                    GetPostsQuery.GetPosts getPosts = response.data().getPosts();
-                    f.add(new FeedClass("https://source.unsplash.com/random/800x800",getPosts.author().name(),getPosts.photo(),getPosts.title(),getPosts.content(),getPosts.status().rawValue(),getPosts.createdAt()));
-                    adapter.notifyDataSetChanged();
-                }
-                else{
-
-                    getActivity().runOnUiThread(()-> Toast.makeText(getContext(),"Null Bruh",Toast.LENGTH_SHORT).show());
-
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull ApolloException e) {
-                getActivity().runOnUiThread(()->{
-                    Toast.makeText(getContext(),e.toString(),Toast.LENGTH_SHORT).show();
-                });
-            }
-        });
+        f.add(new FeedClass("https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80","vallabhrk@123","https://images.unsplash.com/photo-1564365692619-fcd1dc19c43b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80","Sardar Patel Road","Breakage in the middle of the road","Update : We are looking into it","22-12-1999"));
+//        MyClient.getClient(null).query(GetPostsQuery.builder().build()).enqueue(new ApolloCall.Callback<GetPostsQuery.Data>() {
+//            @Override
+//            public void onResponse(@NotNull Response<GetPostsQuery.Data> response) {
+//
+//                if(response.data()!=null){
+//
+//                    getActivity().runOnUiThread(()-> Toast.makeText(getContext(),response.data().toString()
+//                            ,Toast.LENGTH_SHORT).show());
+//
+//                    GetPostsQuery.GetPosts getPosts = response.data().getPosts();
+//                    f.add(new FeedClass("https://source.unsplash.com/random/800x800",getPosts.author().name(),getPosts.photo(),getPosts.title(),getPosts.content(),getPosts.status().rawValue(),getPosts.createdAt()));
+//                    adapter.notifyDataSetChanged();
+//                }
+//                else{
+//
+//                    getActivity().runOnUiThread(()-> Toast.makeText(getContext(),"Null Bruh",Toast.LENGTH_SHORT).show());
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NotNull ApolloException e) {
+//                getActivity().runOnUiThread(()->{
+//                    Toast.makeText(getContext(),e.toString(),Toast.LENGTH_SHORT).show();
+//                });
+//            }
+//        });
         floatingActionButton.setOnClickListener(view -> {
 
 

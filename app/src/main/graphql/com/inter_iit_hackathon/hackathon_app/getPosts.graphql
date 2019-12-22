@@ -11,6 +11,7 @@ query GetPosts{
             name
         }
         createdAt
+        updatedAt
         status
         location{
             lat

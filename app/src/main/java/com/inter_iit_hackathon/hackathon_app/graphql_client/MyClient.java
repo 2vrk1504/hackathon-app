@@ -10,7 +10,7 @@ public class MyClient {
 
     public static MyClient instance;
 
-    private static final String BASE_URL = "http://10.70.20.160:4000";
+    private static final String BASE_URL = "http://192.168.43.104:4000";
 
     ApolloClient apolloClient;
     String authToken;

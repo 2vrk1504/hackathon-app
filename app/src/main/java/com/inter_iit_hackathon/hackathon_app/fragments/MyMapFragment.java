@@ -1,7 +1,5 @@
 package com.inter_iit_hackathon.hackathon_app.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,19 +12,17 @@ import android.widget.Toast;
 import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+
 import com.google.maps.android.clustering.ClusterManager;
-import com.google.maps.android.clustering.algo.GridBasedAlgorithm;
 import com.inter_iit_hackathon.hackathon_app.GetPostsQuery;
 import com.inter_iit_hackathon.hackathon_app.GetProjectsQuery;
 import com.inter_iit_hackathon.hackathon_app.R;
-import com.inter_iit_hackathon.hackathon_app.classes.ClusterPointers;
+import com.inter_iit_hackathon.hackathon_app.classes.ClusterPointer;
 import com.inter_iit_hackathon.hackathon_app.graphql_client.MyClient;
 import com.inter_iit_hackathon.hackathon_app.helpers.SessionManager;
 
@@ -39,10 +35,10 @@ import java.util.Objects;
 public class MyMapFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private ClusterManager<ClusterPointers> mClusterManager;
+    private ClusterManager<ClusterPointer> mClusterManager;
     SessionManager sessionManager;
 
-    private List<ClusterPointers> clusterPointers;
+    private List<ClusterPointer> clusterPointers;
     public MyMapFragment() {}
 
     public static MyMapFragment newInstance() {
@@ -82,27 +78,28 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
         });
         mMap.setOnMarkerClickListener(mClusterManager);
         clusterPointers = new ArrayList<>();
-        mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<ClusterPointers>() {
+        mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<ClusterPointer>() {
             @Override
-            public boolean onClusterItemClick(ClusterPointers clusterPointers) {
-                Toast.makeText(getContext(),clusterPointers.getPosition().toString(),Toast.LENGTH_SHORT).show();
+            public boolean onClusterItemClick(ClusterPointer clusterPointer) {
+                Toast.makeText(getContext(), clusterPointer.getPosition().toString(),Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
 
         MyClient.getClient(sessionManager.getToken()).query(
-                GetProjectsQuery.builder().build()
-        ).enqueue(new ApolloCall.Callback<GetProjectsQuery.Data>() {
+                GetPostsQuery.builder().build()
+        ).enqueue(new ApolloCall.Callback<GetPostsQuery.Data>() {
             @Override
-            public void onResponse(@NotNull Response<GetProjectsQuery.Data> response) {
-                List<GetProjectsQuery.Project> projects = response.data().projects();
+            public void onResponse(@NotNull Response<GetPostsQuery.Data> response) {
+                List<GetPostsQuery.GetPost> projects = response.data().getPosts();
                 for(int i = 0; i < projects.size(); i++)
-                    mClusterManager.addItem(new ClusterPointer(projects.get(i).title(), new LatLng(
+                    mClusterManager.addItem(new ClusterPointer(projects.get(i).author().name(), projects.get(i).title(), new LatLng(
                             Double.parseDouble(projects.get(i).location().lat()),
                             Double.parseDouble(projects.get(i).location().lng())
                     )));
 
-                mClusterManager.cluster();
+                getActivity().runOnUiThread(() -> mClusterManager.cluster());
+
             }
 
             @Override

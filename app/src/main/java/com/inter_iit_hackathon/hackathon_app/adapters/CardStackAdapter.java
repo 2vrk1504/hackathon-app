@@ -15,6 +15,8 @@ import com.bumptech.glide.Glide;
 import com.inter_iit_hackathon.hackathon_app.R;
 import com.inter_iit_hackathon.hackathon_app.classes.DashboardData;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.ViewHolder> {
@@ -39,7 +41,15 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Glide.with(holder.imageView).load(data.get(position).getImage()).placeholder(R.drawable.ic_launcher_foreground).into(holder.imageView);
         holder.roadName.setText(data.get(position).getRoad_name());
-        holder.postedOn.setText(data.get(position).getPostedOn());
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            holder.postedOn.setText(dateFormat.format(format.parse(data.get(position).getPostedOn())) );
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         holder.desc.setText(data.get(position).getDescription());
         holder.user.setText(data.get(position).getPutUserName());
     }
@@ -47,6 +57,10 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
     @Override
     public int getItemCount() {
         return data.size();
+    }
+
+    public DashboardData getItem(int id) {
+        return data.get(id);
     }
 
 

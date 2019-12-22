@@ -26,6 +26,9 @@ import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.inter_iit_hackathon.hackathon_app.AddSeriousMutation;
+import com.inter_iit_hackathon.hackathon_app.AddTrivialMutation;
+import com.inter_iit_hackathon.hackathon_app.GetPostsQuery;
 import com.inter_iit_hackathon.hackathon_app.GetProjectsQuery;
 import com.inter_iit_hackathon.hackathon_app.R;
 import com.inter_iit_hackathon.hackathon_app.activities.MainActivity;
@@ -35,6 +38,7 @@ import com.inter_iit_hackathon.hackathon_app.classes.DashboardData;
 import com.inter_iit_hackathon.hackathon_app.graphql_client.MyClient;
 import com.inter_iit_hackathon.hackathon_app.helpers.SessionManager;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
+import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.CardStackView;
 import com.yuyakaido.android.cardstackview.Direction;
 import com.yuyakaido.android.cardstackview.SwipeAnimationSetting;
@@ -69,6 +73,7 @@ public class DashboardFragment extends Fragment {
     private Boolean state = Boolean.TRUE;
     private FloatingActionButton fab_add_pic;
     private SessionManager sessionManager;
+    private CardStackAdapter c;
 
     public static DashboardFragment newInstance() {
        return new DashboardFragment();
@@ -92,22 +97,48 @@ public class DashboardFragment extends Fragment {
 
         fab_add_pic.setOnClickListener(view -> startPhotoProcess());
 
-        cardStackLayoutManager = new CardStackLayoutManager(getContext());
+        cardStackLayoutManager = new CardStackLayoutManager(getContext(), new CardStackListener() {
+            int id;
+            @Override
+            public void onCardDragging(Direction direction, float ratio) {
+
+            }
+            @Override
+            public void onCardSwiped(Direction direction) {
+                if(direction == Direction.Left)
+                    addTrivial(id);
+                else if (direction == Direction.Right)
+                    addSerious(id);
+            }
+            @Override
+            public void onCardRewound() {}
+            @Override
+            public void onCardCanceled() {
+
+            }
+            @Override
+            public void onCardAppeared(View view, int position) {
+                id = position;
+            }
+            @Override
+            public void onCardDisappeared(View view, int position) {
+
+            }
+        });
         cardStackView.setLayoutManager(cardStackLayoutManager);
         bar = root.findViewById(R.id.progress);
-        final CardStackAdapter c = new CardStackAdapter(list, getContext());
+        c = new CardStackAdapter(list, getContext());
         cardStackView.setAdapter(c);
         bar.setVisibility(View.VISIBLE);
         if(state){
             state=false;
-            MyClient.getClient(null).query(GetProjectsQuery.builder().build()).enqueue(new ApolloCall.Callback<GetProjectsQuery.Data>() {
+            MyClient.getClient(null).query(GetPostsQuery.builder().build()).enqueue(new ApolloCall.Callback<GetPostsQuery.Data>() {
                 @Override
-                public void onResponse(@NotNull Response<GetProjectsQuery.Data> response) {
+                public void onResponse(@NotNull Response<GetPostsQuery.Data> response) {
                     if(response.data()!=null) {
-//                    getActivity().runOnUiThread(()
-                        List<GetProjectsQuery.Project> project = response.data().projects();
+                        List<GetPostsQuery.GetPost> project = response.data().getPosts();
                         for (int i = 0; i < project.size(); i++) {
-                            list.add(new DashboardData(project.get(i).photo(), project.get(i).title(), project.get(i).description(), project.get(i).updatedAt(), project.get(i).author().name()));
+                            list.add(new DashboardData(project.get(i).id(), project.get(i).photo(), project.get(i).title(), project.get(i).content(), project.get(i).updatedAt(), project.get(i).author().name()));
 
                         }
                         state=true;
@@ -132,39 +163,46 @@ public class DashboardFragment extends Fragment {
             SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder().setDirection(Direction.Left).build();
             cardStackLayoutManager.setSwipeAnimationSetting(setting);
             cardStackView.swipe();
-            MyClient.getClient(sessionManager.getToken()).mutate(
-                    AddTrivialMutation.builder()
-                            .id()
-                            .build()
-            ).enqueue(
-                    new ApolloCall.Callback<AddTrivialMutation.Data>() {
-                        @Override
-                        public void onResponse(@NotNull Response<AddTrivialMutation.Data> response) { }
-
-                        @Override
-                        public void onFailure(@NotNull ApolloException e) { }
-                    }
-            );
         });
         fab_thumbs_up.setOnClickListener(view -> {
             SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder().setDirection(Direction.Right).build();
             cardStackLayoutManager.setSwipeAnimationSetting(setting);
             cardStackView.swipe();
-            MyClient.getClient(sessionManager.getToken()).mutate(
-                    AddTrivialMutation.builder()
-                            .id()
-                            .build()
-            ).enqueue(
-                    new ApolloCall.Callback<AddSeriousMutation.Data>() {
-                        @Override
-                        public void onResponse(@NotNull Response<AddSeriousMutation.Data> response) { }
 
-                        @Override
-                        public void onFailure(@NotNull ApolloException e) { }
-                    }
-            );
         });
         return root;
+    }
+
+    private void addTrivial(int id) {
+        MyClient.getClient(sessionManager.getToken()).mutate(
+                AddTrivialMutation.builder()
+                        .id(c.getItem(id).id)
+                        .build()
+        ).enqueue(
+                new ApolloCall.Callback<AddTrivialMutation.Data>() {
+                    @Override
+                    public void onResponse(@NotNull Response<AddTrivialMutation.Data> response) { }
+
+                    @Override
+                    public void onFailure(@NotNull ApolloException e) { }
+                }
+        );
+    }
+
+    private void addSerious(int id){
+        MyClient.getClient(sessionManager.getToken()).mutate(
+                AddTrivialMutation.builder()
+                        .id(c.getItem(id).id)
+                        .build()
+        ).enqueue(
+                new ApolloCall.Callback<AddTrivialMutation.Data>() {
+                    @Override
+                    public void onResponse(@NotNull Response<AddTrivialMutation.Data> response) { }
+
+                    @Override
+                    public void onFailure(@NotNull ApolloException e) { }
+                }
+        );
     }
 
     File photoFile;

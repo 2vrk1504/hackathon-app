@@ -1,6 +1,7 @@
 package com.inter_iit_hackathon.hackathon_app.classes;
 
 public class DashboardData {
+    public String id;
     private String image;
     private String road_name;
     private String description;
@@ -10,7 +11,8 @@ public class DashboardData {
         return image;
     }
 
-    public DashboardData(String image, String road_name, String description, String postedOn, String putUserName) {
+    public DashboardData(String id, String image, String road_name, String description, String postedOn, String putUserName) {
+        this.id = id;
         this.image = image;
         this.road_name = road_name;
         this.description = description;
