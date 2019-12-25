@@ -62,20 +62,16 @@ public class LoginActivity extends AppCompatActivity {
                                 LoginActivity.this.runOnUiThread(() -> Toast.makeText(LoginActivity.this,"Account Not Found! Please check credentials",Toast.LENGTH_LONG).show());
                             }
                             else {
-                                sess.setLoggedInProfile(response.data().signIn());
+                                sess.setLoggedInProfile(response.data().signIn(), email);
                                 Log.d("Vallabh", response.data().signIn().token());
-                                LoginActivity.this.runOnUiThread(()->{
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                    finish();
-                                });
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                finish();
                             }
                         }
 
                         @Override
                         public void onFailure(@NotNull ApolloException e) {
                             LoginActivity.this.runOnUiThread(() -> Toast.makeText(LoginActivity.this,e.toString(),Toast.LENGTH_LONG).show());
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
                         }
                     }
             );

@@ -11,6 +11,7 @@ public class SessionManager {
     private static final String PREF_NAME = "HackathonApp";
     private static final String TOKEN = "token";
     private static final String NAME = "name";
+    private static final String EMAIL = "email";
     private static final String ID = "id";
 
     private Context context;
@@ -54,21 +55,31 @@ public class SessionManager {
         return getToken() != null;
     }
 
-    public void setLoggedInProfile(SignInMutation.SignIn signIn){
+    public void setLoggedInProfile(SignInMutation.SignIn signIn, String email){
         setToken(signIn.token());
         setId(signIn.user().id());
         setName(signIn.user().name());
+        editor.putString(EMAIL, email);
+        editor.commit();
     }
-    public void setLoggedInProfile(SignUpMutation.SignUp signUp){
+    public void setLoggedInProfile(SignUpMutation.SignUp signUp, String email){
         setToken(signUp.token());
         setId(signUp.user().id());
         setName(signUp.user().name());
+        editor.putString(EMAIL, email);
+        editor.commit();
+    }
+
+    public String getEmail(){
+        return preferences.getString(EMAIL, null);
     }
 
     public void logout(){
         setToken(null);
         setName(null);
         setId(null);
+        editor.putString(EMAIL, null);
+        editor.commit();
     }
 
 

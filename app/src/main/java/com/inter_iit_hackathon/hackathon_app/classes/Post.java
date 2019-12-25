@@ -1,23 +1,30 @@
 package com.inter_iit_hackathon.hackathon_app.classes;
 
-public class DashboardData {
+import java.util.List;
+
+public class Post {
+
     public String id;
     private String image;
     private String road_name;
     private String description;
     private String postedOn;
     private String putUserName;
+    public int likes;
+    public int dislikes;
     public String getImage() {
         return image;
     }
 
-    public DashboardData(String id, String image, String road_name, String description, String postedOn, String putUserName) {
+    public Post(String id, String image, String road_name, String description, String postedOn, String putUserName, int likes, int dislikes) {
         this.id = id;
         this.image = image;
         this.road_name = road_name;
         this.description = description;
         this.postedOn = postedOn;
         this.putUserName = putUserName;
+        this.likes = likes;
+        this.dislikes = dislikes;
     }
 
     public void setImage(String image) {
@@ -55,4 +62,5 @@ public class DashboardData {
     public void setPutUserName(String putUserName) {
         this.putUserName = putUserName;
     }
+
 }

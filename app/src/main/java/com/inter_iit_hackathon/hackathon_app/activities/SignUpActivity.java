@@ -63,7 +63,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(@NotNull Response<SignUpMutation.Data> response) {
 
-                                    sess.setLoggedInProfile(response.data().signUp());
+                                    sess.setLoggedInProfile(response.data().signUp(), email);
                                     startActivity(new Intent(SignUpActivity.this, MainActivity.class));
                                     finish();
                                 }

@@ -1,29 +1,21 @@
-query GetPosts{
-    getPosts{
-        photo
+query GetFeed{
+    getFeed{
         id
         content
         title
-        serious{
-            id
-            email
-        }
-        trivial{
-            id
-            email
-        }
+        photo
         numberOfSerious
         numberOfTrivial
         author{
             id
             name
         }
-        createdAt
         updatedAt
-        status
         location{
+            id
             lat
             lng
         }
+        status
     }
 }

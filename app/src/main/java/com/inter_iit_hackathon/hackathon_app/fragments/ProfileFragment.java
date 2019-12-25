@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.inter_iit_hackathon.hackathon_app.R;
 import com.inter_iit_hackathon.hackathon_app.adapters.FeedAdapter;
 import com.inter_iit_hackathon.hackathon_app.classes.FeedClass;
+import com.inter_iit_hackathon.hackathon_app.fragments.interfaces.FragmentLifecycle;
 import com.inter_iit_hackathon.hackathon_app.helpers.SessionManager;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import java.util.Objects;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements FragmentLifecycle {
 
     SessionManager sess;
     TextView username;
@@ -42,5 +43,15 @@ public class ProfileFragment extends Fragment {
         sess = new SessionManager(Objects.requireNonNull(getContext()));
         username.setText(sess.getName());
         return root;
+    }
+
+    @Override
+    public void onPauseFragment() {
+
+    }
+
+    @Override
+    public void onResumeFragment() {
+
     }
 }

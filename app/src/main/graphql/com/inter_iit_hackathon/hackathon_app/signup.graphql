@@ -1,9 +1,9 @@
 mutation SignUp ($email: String!, $password: String!, $name: String!){
     signUp(data:{email: $email, password: $password, name: $name}){
         user{
-            id,
+            id
             name
-        },
+        }
         token
     }
 }

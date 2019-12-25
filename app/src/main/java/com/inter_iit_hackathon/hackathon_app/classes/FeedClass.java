@@ -3,15 +3,17 @@ package com.inter_iit_hackathon.hackathon_app.classes;
 import com.inter_iit_hackathon.hackathon_app.type.Status;
 
 public class FeedClass {
-    String profile_url;
-    String profile_name;
-    String street_url;
-    String street_name;
-    String street_issue;
-    String street_update;
-    String street_upload_date;
+    public String profile_url;
+    public String profile_name;
+    public String street_url;
+    public String street_name;
+    public String street_issue;
+    public String street_update;
+    public String street_upload_date;
+    public int likes;
+    public int dislikes;
 
-    public FeedClass(String profile_url, String profile_name, String street_url, String street_name, String street_issue, String street_update, String street_upload_date) {
+    public FeedClass(String profile_url, String profile_name, String street_url, String street_name, String street_issue, String street_update, String street_upload_date, int likes, int dislikes) {
         this.profile_url = profile_url;
         this.profile_name = profile_name;
         this.street_url = street_url;
@@ -19,6 +21,8 @@ public class FeedClass {
         this.street_issue = street_issue;
         this.street_update = street_update;
         this.street_upload_date = street_upload_date;
+        this.likes = likes;
+        this.dislikes = dislikes;
     }
 
     public String getProfile_url() {

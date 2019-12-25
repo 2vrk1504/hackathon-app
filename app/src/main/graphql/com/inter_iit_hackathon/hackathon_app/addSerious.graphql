@@ -1,5 +1,5 @@
-mutation AddSerious($id: String!){
-    addSerious(id: $id){
+mutation AddSerious($id: String!, $numberOfSerious: Int!){
+    addSerious(id: $id, numberOfSerious: $numberOfSerious){
         id
     }
 }

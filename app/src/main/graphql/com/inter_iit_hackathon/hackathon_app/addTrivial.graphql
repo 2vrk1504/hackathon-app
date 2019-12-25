@@ -1,5 +1,5 @@
-mutation AddTrivial($id: String!){
-    addTrivial(id: $id){
+mutation AddTrivial($id: String!, $numberOfTrivial: Int!){
+    addTrivial(id: $id, numberOfTrivial: $numberOfTrivial){
         id
     }
 }

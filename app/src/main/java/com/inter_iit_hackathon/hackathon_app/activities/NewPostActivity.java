@@ -82,7 +82,7 @@ public class NewPostActivity extends AppCompatActivity {
                 FileOutputStream fos = new FileOutputStream(imgFile.getAbsolutePath());
 
                 new Thread(() -> {
-                    myBitmap.compress(Bitmap.CompressFormat.JPEG, 70, fos);
+                    myBitmap.compress(Bitmap.CompressFormat.JPEG, 60, fos);
                     try {
                         fos.flush();
                         fos.close();

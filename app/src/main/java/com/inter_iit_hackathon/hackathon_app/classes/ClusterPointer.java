@@ -5,12 +5,14 @@ import com.google.maps.android.clustering.ClusterItem;
 
 public class ClusterPointer implements ClusterItem {
     private final String title;
+    public final String imgUrl;
     private final String username;
     private final LatLng latLng;
 
-    public ClusterPointer(String username, String title, LatLng latLng) {
+    public ClusterPointer(String username, String title, String imgUrl, LatLng latLng) {
         this.username = username;
         this.title = title;
+        this.imgUrl = imgUrl;
         this.latLng = latLng;
     }
 
@@ -26,7 +28,10 @@ public class ClusterPointer implements ClusterItem {
 
     @Override
     public String getSnippet() {
-        return username;
+        return "{" +
+                "\"username\": \"" + username +"\"," +
+                "\"url\": \"" + imgUrl +"\"" +
+                "}";
     }
 
 }

@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,18 +12,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.inter_iit_hackathon.hackathon_app.R;
-import com.inter_iit_hackathon.hackathon_app.classes.DashboardData;
+import com.inter_iit_hackathon.hackathon_app.classes.Post;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.ViewHolder> {
-    private ArrayList<DashboardData> data;
+    private ArrayList<Post> data;
     private Context context;
 
 
-    public CardStackAdapter(ArrayList<DashboardData> i, Context c) {
+    public CardStackAdapter(ArrayList<Post> i, Context c) {
         this.data = i;
         this.context = c;
     }
@@ -42,13 +43,17 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
         Glide.with(holder.imageView).load(data.get(position).getImage()).placeholder(R.drawable.ic_launcher_foreground).into(holder.imageView);
         holder.roadName.setText(data.get(position).getRoad_name());
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        SimpleDateFormat output = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        String time = "";
         try {
-            holder.postedOn.setText(dateFormat.format(format.parse(data.get(position).getPostedOn())) );
+            Date d = sdf.parse(data.get(position).getPostedOn());
+            time = output.format(d);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        holder.postedOn.setText(time);
 
         holder.desc.setText(data.get(position).getDescription());
         holder.user.setText(data.get(position).getPutUserName());
@@ -59,7 +64,7 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
         return data.size();
     }
 
-    public DashboardData getItem(int id) {
+    public Post getItem(int id) {
         return data.get(id);
     }
 

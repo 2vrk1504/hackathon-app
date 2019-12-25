@@ -6,12 +6,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
+import com.apollographql.apollo.ApolloCall;
+import com.apollographql.apollo.api.Query;
 import com.inter_iit_hackathon.hackathon_app.R;
 import com.inter_iit_hackathon.hackathon_app.fragments.DashboardFragment;
 import com.inter_iit_hackathon.hackathon_app.fragments.FeedFragment;
 import com.inter_iit_hackathon.hackathon_app.fragments.MyMapFragment;
 import com.inter_iit_hackathon.hackathon_app.fragments.ProfileFragment;
+import com.inter_iit_hackathon.hackathon_app.graphql_client.MyClient;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -40,7 +44,6 @@ public class MainActivityTabsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
-        // Return a ProfileFragment (defined as a static inner class below).
         return fragments[position];
     }
 
